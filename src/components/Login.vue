@@ -6,7 +6,12 @@
         <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password" placeholder="请输入密码" type="password"></el-input>
+        <el-input
+          v-model="form.password"
+          placeholder="请输入密码"
+          type="password"
+          @keyup.enter.native="onSubmit"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">登陆</el-button>
@@ -46,8 +51,8 @@ export default {
             method: "post",
             data: this.form
           }).then(res => {
-            if (res.data.meta.status === 200) {
-              localStorage.setItem("token", res.data.data.token);
+            if (res.meta.status === 200) {
+              localStorage.setItem("token", res.data.token);
               this.$message.success("登陆成功");
               this.$router.push("/home");
               // 存储token
